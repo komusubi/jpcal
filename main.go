@@ -13,6 +13,7 @@ import (
 
 var (
 	version = "devel"
+	alwaysColor = false
 )
 
 func showYearCalendar(specifyYear string, w io.Writer) {
@@ -117,6 +118,7 @@ func run(args []string, out, err io.Writer) int {
 	flags.BoolVar(&showYear, "y", false, "Use yyyy as the year.")
 	flags.BoolVar(&three, "3", false, "Display the previous, current and next month surrounding today.")
 	flags.BoolVar(&showVersion, "v", false, "show version")
+	flags.BoolVar(&alwaysColor, "c", false, "always color output")
 	flags.IntVar(&before, "B", 0, "Display the number of months before the current month.")
 	flags.IntVar(&after, "A", 0, "Display the number of months after the current month.")
 	flags.Parse(args[1:])
