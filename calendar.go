@@ -19,13 +19,19 @@ type Calendar struct {
 }
 
 var (
-	red          = color.New(color.FgRed, color.Bold).SprintFunc()
-	blue         = color.New(color.FgBlue, color.Bold).SprintFunc()
-	reverseVideo = color.New(color.ReverseVideo).SprintFunc()
-	daySpace     = "   "
+	redColor          = color.New(color.FgRed, color.Bold)
+	blueColor         = color.New(color.FgBlue, color.Bold)
+	reverseVideoColor = color.New(color.ReverseVideo)
+	daySpace          = "   "
 )
 
 func (calendar *Calendar) setHeader(date time.Time) {
+	if alwaysColor {
+		redColor.EnableColor()
+		blueColor.EnableColor()
+	}
+	red := redColor.SprintFunc()
+	blue := blueColor.SprintFunc()
 	calendar.DateHeader += fmt.Sprintf("     %d年 %02d月       ", date.Year(), date.Month())
 	calendar.WeekHeader += fmt.Sprintf("%s %s %s %s %s %s %s   ", red("日"), "月", "火", "水", "木", "金", blue("土"))
 }
@@ -40,6 +46,15 @@ func (calendar *Calendar) decoratedDate(date time.Time) string {
 	if date.Day() < 10 {
 		space = " "
 	}
+
+	if alwaysColor {
+		redColor.EnableColor()
+		blueColor.EnableColor()
+		reverseVideoColor.EnableColor()
+	}
+	red := redColor.SprintFunc()
+	blue := blueColor.SprintFunc()
+	reverseVideo := reverseVideoColor.SprintFunc()
 
 	if holiday.IsHoliday(date) {
 		decoratedDate = red(date.Day())
